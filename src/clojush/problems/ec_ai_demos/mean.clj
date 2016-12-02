@@ -57,6 +57,7 @@
         result (top-item :boolean end-state)]
     result))
 
+;; what does do?
 (defn all-errors
   [program]
   (doall
@@ -67,4 +68,14 @@
           0
           1)))))
 
+;;what does do?
+(def atom-generators
+  (concat (registered-for-stacks [:integer :boolean :exec])
+          (list (fn [] (lrand-int 100))
+                'in1 'in2 'in3)))
 
+;; what does do?
+(def argmap
+  {:error-function all-errors
+   :atom-generators atom-generators
+   })
