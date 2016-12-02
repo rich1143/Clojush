@@ -37,3 +37,10 @@
    [3,1,4,1,5]
    [314,15,9,26,65]
    [2,2,3,4,4]])
+
+(defn expected-output
+  [inputs]
+  (let [[one two three four five] inputs]
+    (/ (+ one two three four five) 5)))
+
+
