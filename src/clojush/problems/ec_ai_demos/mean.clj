@@ -43,4 +43,28 @@
   (let [[one two three four five] inputs]
     (/ (+ one two three four five) 5)))
 
+(defn make-start-state
+  [inputs]
+  (reduce (fn [state input]
+            (push-item input :input state))
+          (make-push-state)
+          inputs))
+
+(defn actual-output
+  [program inputs]
+  (let [start-state (make-start-state inputs)
+        end-state (run-push program start-state)
+        result (top-item :boolean end-state)]
+    result))
+
+(defn all-errors
+  [program]
+  (doall
+    (for [inputs input-set]
+      (let [expected (expected-output inputs)
+            actual (actual-output program inputs)]
+        (if (= expected actual)
+          0
+          1)))))
+
 
