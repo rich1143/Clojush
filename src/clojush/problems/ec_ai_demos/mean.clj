@@ -54,27 +54,29 @@
   [program inputs]
   (let [start-state (make-start-state inputs)
         end-state (run-push program start-state)
-        result (top-item :boolean end-state)]
+        result (top-item :float end-state)]
     result))
 
-;; what does do?
+(defn abs [n]
+  (if (< n 0)
+    (- n)
+    n))
+
 (defn all-errors
   [program]
   (doall
     (for [inputs input-set]
       (let [expected (expected-output inputs)
             actual (actual-output program inputs)]
-        (if (= expected actual)
-          0
-          1)))))
+        (if (= actual :no-stack-item)
+          10000
+          (abs (- expected actual)))))))
 
-;;what does do?
 (def atom-generators
-  (concat (registered-for-stacks [:integer :boolean :exec])
-          (list (fn [] (lrand-int 100))
-                'in1 'in2 'in3)))
+  (concat (registered-for-stacks [:integer_vector :float :integer :boolean :exec])
+          (list 5)
+          (list 'in1)))
 
-;; what does do?
 (def argmap
   {:error-function all-errors
    :atom-generators atom-generators
